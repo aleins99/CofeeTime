@@ -72,3 +72,11 @@ class UserView(viewsets.ModelViewSet):
         user.groups.clear()
         user.groups.add(group)
         return super().update(request, *args, **kwargs)
+
+    def partial_update(self, request, *args, **kwargs):
+        pk = kwargs['pk']
+        user = get_object_or_404(Usuario, pk=pk)
+        group = Group.objects.get(id=request.data['group'])
+        user.groups.clear()
+        user.groups.add(group)
+        return super().partial_update(request, *args, **kwargs)
