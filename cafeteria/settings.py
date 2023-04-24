@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework',
     'cofee'
-  
+
 ]
 
 MIDDLEWARE = [
@@ -88,19 +88,23 @@ WSGI_APPLICATION = 'cafeteria.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'cofeeedb',
+        'NAME': 'cofeedb',
         'HOST': '127.0.0.1',
         'PORT': 27017,
 
     }
 }
 REST_FRAMEWORK = {
-    
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        
+
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
-    
+
 }
 
 

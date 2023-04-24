@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group
+from django.contrib.auth.models import User, Group
 
 
 class Productos(models.Model):
@@ -40,7 +40,7 @@ class Pedidos(models.Model):
         ordering = ['descripcion']
 
 
-class Usuario(AbstractUser):
+class Usuario(User):
     group = models.ForeignKey(
         Group, on_delete=models.CASCADE, null=True, blank=True)
 

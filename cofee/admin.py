@@ -13,3 +13,6 @@ class ProductosAdmin(admin.ModelAdmin):
 class PedidosAdmin(admin.ModelAdmin):
     list_display = ('descripcion', 'fecha', 'cantidad', 'costo')
     search_fields = ['descripcion']
+
+
+admin.site.register(Usuario)
