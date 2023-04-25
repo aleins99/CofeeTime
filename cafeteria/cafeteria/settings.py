@@ -89,8 +89,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'cofeedb',
-        'HOST': '127.0.0.1',
-        'PORT': 27017,
+        'CLIENT': {
+            'host': 'mongodb://mongodb:27017',
+
+        }
 
     }
 }

@@ -4,7 +4,7 @@ RUN mkdir -p /home/cofeetime
 
 WORKDIR /home/cofeetime
 
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED 1
 
 EXPOSE 8000
 
