@@ -8,7 +8,7 @@ from rest_framework.response import Response
 # import status
 from rest_framework import status
 from django.http import JsonResponse, QueryDict
-from .permissions import IsRecepcionista, IsCocinero, IsRecepcionistaOrCocinero, isAdmin
+from .permissions import IsRecepcionista, IsRecepcionistaOrCocinero, isAdmin
 
 
 class ProductoView(viewsets.ModelViewSet):
@@ -16,9 +16,10 @@ class ProductoView(viewsets.ModelViewSet):
     queryset = Productos.objects.all()
 
     def get_permissions(self):
+        permission_classes = []
         if self.action == "retrieve" or self.action == "list":
             permission_classes = [IsRecepcionistaOrCocinero]
-        if self.action == "create" or self.action == "update" or self.action == "partial_update" or self.action == "destroy" or self.action == "list" or self.action == "retrieve":
+        if permission_classes.__len__() == 0:
             permission_classes = [isAdmin]
         return [permission() for permission in permission_classes]
 
