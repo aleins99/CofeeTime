@@ -155,6 +155,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # CORS
-CORS_ALLOWED_ORIGINS = [
-
-]
+CORS_ORIGIN_ALLOW_ALL = True

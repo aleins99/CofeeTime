@@ -1,23 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
-
+import Login from "./components/Login";
+import Home from "./components/Home";
+import jwtDecode from "jwt-decode";
 function App() {
-  const [count, setCount] = useState(0);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("accessToken");
+    if (token) {
+      setUserId(jwtDecode(JSON.parse(token)).user_id);
+    }
+  }, []);
+
+  const onLoginHandler = (userId) => {
+    console.log(userId);
+    setUserId(userId);
+  };
+
+  const onLogoutHandler = () => {
+    setUserId(null);
+    window.localStorage.removeItem("accessToken");
+  };
 
   return (
     <>
-      <div className="login">
-        <form action="POST">
-          <label htmlFor="username">First name:</label>
-          <br />
-          <input type="text" id="username" name="username" placeholder="John" />
-          <br />
-          <label htmlFor="password">Last name:</label>
-          <br />
-          <input type="text" id="lname" name="lname" placeholder="Doe" />
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
+      {userId ? (
+        <Home onLogout={onLogoutHandler} userId={userId} />
+      ) : (
+        <Login onLogin={onLoginHandler} />
+      )}
     </>
   );
 }

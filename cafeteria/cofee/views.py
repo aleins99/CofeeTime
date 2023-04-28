@@ -7,7 +7,7 @@ import json
 from rest_framework.response import Response
 # import status
 from rest_framework import status
-from .permissions import IsRecepcionista, IsRecepcionistaOrCocinero, isAdmin
+from .permissions import IsRecepcionista, IsRecepcionistaOrCocinero, isAdmin, IsRecepcionistaOrAdmin
 
 
 class ProductoView(viewsets.ModelViewSet):
@@ -17,10 +17,20 @@ class ProductoView(viewsets.ModelViewSet):
     def get_permissions(self):
         permission_classes = list()
         if self.action == "retrieve" or self.action == "list":
-            permission_classes = [IsRecepcionistaOrCocinero]
+            permission_classes = [IsRecepcionistaOrAdmin]
         if permission_classes.__len__() == 0:
             permission_classes = [isAdmin]
         return [permission() for permission in permission_classes]
+
+    def create(self, request):
+        data = request.data
+        data['id'] = Productos.objects.all().count() + 1
+        serializer = self.serializer_class(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Producto creado correctamente"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"message": "Error al crear el producto"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PedidoView(viewsets.ModelViewSet):
@@ -38,46 +48,17 @@ class PedidoView(viewsets.ModelViewSet):
 
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    queryset = Usuario.objects.all()
+    queryset = User.objects.all()
 
-    def get_permissions(self):
-        permission_classes = [isAdmin]
-        return [permission() for permission in permission_classes]
-
-    def create(self, request, *args, **kwargs):
-        # update the request data
-
-        serializer = self.get_serializer(data=request.data)
-
-        print("REQUEEEEEST", request.data)
+    def create(self, request):
+        data = request.data
+        serializer = self.serializer_class(data=data)
         if serializer.is_valid():
-            group = Group.objects.get(
-                id=request.data['group'])
-
-            print("SERIALIZER", serializer)
-            self.perform_create(serializer)
-            if request.data['group'] == None or request.data['group'] == '':
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            if group == None:
-                # return error
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-            serializer.instance.groups.add(group)
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
-
-    def update(self, request, *args, **kwargs):
-        pk = kwargs['pk']
-        user = get_object_or_404(Usuario, pk=pk)
-        group = Group.objects.get(id=request.data['group'])
-        user.groups.clear()
-        user.groups.add(group)
-        return super().update(request, *args, **kwargs)
-
-    def partial_update(self, request, *args, **kwargs):
-        pk = kwargs['pk']
-        user = get_object_or_404(Usuario, pk=pk)
-        group = Group.objects.get(id=request.data['group'])
-        user.groups.clear()
-        user.groups.add(group)
-        return super().partial_update(request, *args, **kwargs)
+            serializer.save()
+            usuario = User.objects.get(username=data['username'])
+            usuario.password = "admin"
+            usuario.save()
+            usuario.groups.add(Group.objects.get(name=data['group_name']))
+            return Response({"message": "Producto creado correctamente"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"message": "Error al crear el producto"}, status=status.HTTP_400_BAD_REQUEST)

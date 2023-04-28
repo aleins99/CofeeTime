@@ -17,13 +17,12 @@ class PedidoSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    group_name = serializers.SerializerMethodField()
 
     class Meta:
-        model = Usuario
-        fields = ('id', 'username', 'password', 'group')
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name', 'group_name']
 
-    def create(self, validated_data):
-        password = validated_data.pop('password')
-        validated_data['password'] = make_password(password)
-        return super().create(validated_data)
+    def get_group_name(self, obj):
+        group = Group.objects.filter(user=obj).first()
+        return group.name if group else None

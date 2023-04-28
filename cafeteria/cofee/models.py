@@ -40,9 +40,14 @@ class Pedidos(models.Model):
         ordering = ['descripcion']
 
 
+class Grupo(Group):
+    def __str__(self):
+        return str(self.name)
+
+
 class Usuario(User):
     group = models.ForeignKey(
-        Group, on_delete=models.CASCADE, null=True, blank=True)
+        Grupo, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return str(self.username)
