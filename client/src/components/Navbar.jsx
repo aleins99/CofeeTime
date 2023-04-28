@@ -29,13 +29,6 @@ export default function Navbar({ onLogout, userId }) {
         <nav className="navbar">
           <h2 className="left">Bienvenido {user.username}!</h2>
           <ul>
-            {role == "recepcionista" || role == "cocinero" ? (
-              <li>
-                <Link to={"/pedidos"}>Pedidos</Link>
-              </li>
-            ) : (
-              ""
-            )}
             {role == "recepcionista" || role == "admin" ? (
               <li>
                 <Link to={"/productos"}>Productos</Link>
@@ -48,11 +41,12 @@ export default function Navbar({ onLogout, userId }) {
                 <Link to={"/usuarios"}>Usuarios</Link>
               </li>
             )}
-
-            {role === "recepcionista" && (
+            {role == "recepcionista" || role == "cocinero" ? (
               <li>
-                <Link to={"productos"}>Carrito</Link>
+                <Link to={"/pedidos"}>Carrito</Link>
               </li>
+            ) : (
+              ""
             )}
             <li>
               {" "}

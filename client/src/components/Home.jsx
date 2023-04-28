@@ -44,7 +44,10 @@ const Home = ({ onLogout, userId }) => {
         <Routes>
           <Route path="/" element={<>{content}</>}></Route>
           <Route path="/pedidos" element={<Pedidos />}></Route>
-          <Route path="/productos" element={<Productos />}></Route>
+          <Route
+            path="/productos"
+            element={<Productos userId={userId} />}
+          ></Route>
           <Route path="/usuarios" element={<Usuarios />}></Route>
           <Route path="/producto/agregar/" element={<AddProductos />}></Route>
           <Route path="/usuario/agregar/" element={<AddUser />}></Route>
