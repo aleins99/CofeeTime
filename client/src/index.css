@@ -7,8 +7,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #fff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,6 +30,7 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
+  color: #000;
 }
 
 h1 {

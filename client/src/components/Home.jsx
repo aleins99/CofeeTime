@@ -6,7 +6,6 @@ import Pedidos from "./Pedidos";
 import PropTypes from "prop-types";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddProductos from "./AddProductos";
-import AddUser from "./AddUser";
 const Home = ({ onLogout, userId }) => {
   const [user, setUser] = useState();
 
@@ -50,7 +49,6 @@ const Home = ({ onLogout, userId }) => {
           ></Route>
           <Route path="/usuarios" element={<Usuarios />}></Route>
           <Route path="/producto/agregar/" element={<AddProductos />}></Route>
-          <Route path="/usuario/agregar/" element={<AddUser />}></Route>
         </Routes>
       )}
     </BrowserRouter>

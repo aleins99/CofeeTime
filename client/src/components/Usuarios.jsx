@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import userIcon from "../assets/user.svg";
-import { useNavigate } from "react-router-dom";
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:8000/cofee/api/usuarios/", {
@@ -24,7 +21,6 @@ const Usuarios = () => {
   }, []);
   return (
     <>
-      {usuarios && navigate("/")}
       <h1 className="text-center sm:text-left text-4xl">Lista de Usuarios</h1>
       <ul className="grid lg:grid-cols-4 gap-4 grid-cols-2 md:grid-cols-3 place-content-center">
         {usuarios.map((usuario) => {
@@ -54,11 +50,6 @@ const Usuarios = () => {
           );
         })}
       </ul>
-      <Link to="/usuario/agregar">
-        <button className="my-5 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-          Agregar Usuario
-        </button>
-      </Link>
     </>
   );
 };

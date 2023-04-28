@@ -26,26 +26,52 @@ export default function AddProductos() {
       .catch((error) => console.error(error));
   });
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <textarea
-          name="product_description"
-          id="product_description"
-          placeholder="Descripción"
-          rows="10"
-          {...register("descripcion", { required: true })}
-        ></textarea>
-        {errors.descripcion && <span>Este campo es requerido</span>}
-
-        <input
-          type="text"
-          name="product_price"
-          id="product_price"
-          {...register("precio", { required: true })}
-        />
-        {errors.descripcion && <span>Este campo es requerido</span>}
-
-        <button>Guardar</button>
+    <div className="w-full grid place-items-center my-10 ">
+      <form
+        onSubmit={onSubmit}
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      >
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="product_description"
+          >
+            Descripción
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="product_description"
+            type="text"
+            placeholder="Descripción del producto"
+            {...register("descripcion", { required: true })}
+          />
+          {errors.descripcion && (
+            <span className="text-red-600">Este campo es requerido</span>
+          )}
+        </div>
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="product_price"
+          >
+            Precio
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            id="product_price"
+            type="number"
+            placeholder="50000"
+            {...register("precio", { required: true })}
+          />
+          {errors.precio && (
+            <span className="text-red-600">Este campo es requerido</span>
+          )}
+        </div>
+        <div className="flex items-center justify-between">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Agregar Producto
+          </button>
+        </div>
       </form>
     </div>
   );

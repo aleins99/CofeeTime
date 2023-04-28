@@ -52,18 +52,22 @@ const Productos = ({ userId }) => {
               className="max-w-sm rounded overflow-hidden shadow-lg px-4 py-8"
             >
               <p>{producto.descripcion.toUpperCase()}</p>
-              <p>
+              <p className="text-gray-800">
                 Precio: <span>{addPeriod(producto.precio)} G.s </span>{" "}
               </p>
               <div className="flex justify-end">
-                <button className="flex-end">Agregar al carrito</button>
+                <button className="text-white flex-end">Agregar al carrito</button>
               </div>
             </li>
           );
         })}
       </ul>
       {user.group_name === "admin" && (
-        <Link to="/producto/agregar/">Agregar Producto</Link>
+        <Link to="/producto/agregar/">
+          <button className="my-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Agregar Producto
+          </button>
+        </Link>
       )}
     </>
   );
@@ -73,3 +77,7 @@ export default Productos;
 Productos.propTypes = {
   userId: PropTypes.number,
 };
+
+<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Agregar Producto
+        </button>
