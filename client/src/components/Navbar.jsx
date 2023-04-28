@@ -18,7 +18,7 @@ export default function Navbar({ onLogout, userId }) {
       .then((userData) => {
         setUser(userData);
       });
-  }, []);
+  }, [userId]);
   const logoutHandler = () => {
     onLogout();
   };

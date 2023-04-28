@@ -46,7 +46,7 @@ const Usuarios = () => {
                   <span className="text-gray-800">{usuario.username} </span>
                 </p>
                 <p className="text-blue-800 text-base">
-                  Grupo:{" "}
+                  Rol:{" "}
                   <span className="text-gray-800">{usuario.group_name}</span>
                 </p>
               </li>

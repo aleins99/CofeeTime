@@ -24,7 +24,7 @@ const Home = ({ onLogout, userId }) => {
       .then((userData) => {
         setUser(userData);
       });
-  }, []);
+  }, [userId]);
 
   const role = user ? user.group_name : null;
   console.log(user);

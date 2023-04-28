@@ -1,8 +1,8 @@
 FROM python:3.10
 
-RUN mkdir -p /home/cofeetime
+RUN mkdir -p /home/cofeetime/cafeteria
 
-WORKDIR /home/cofeetime
+WORKDIR /home/cofeetime/cafeteria
 
 ENV PYTHONUNBUFFERED 1
 
