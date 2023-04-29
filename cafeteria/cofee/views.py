@@ -8,6 +8,7 @@ from rest_framework.response import Response
 # import status
 from rest_framework import status
 from .permissions import IsRecepcionista, IsRecepcionistaOrCocinero, isAdmin, IsRecepcionistaOrAdmin
+from django.core import serializers
 
 
 class ProductoView(viewsets.ModelViewSet):
@@ -57,8 +58,8 @@ class UserView(viewsets.ModelViewSet):
             serializer.save()
             usuario = User.objects.get(username=data['username'])
             usuario.groups.add(Group.objects.get(name=data['group_name']))
-
-            return Response({"message": "Usuario creado correctamente"}, status=status.HTTP_201_CREATED)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
         else:
             return Response({"message": "Error al crear el usuario"}, status=status.HTTP_400_BAD_REQUEST)

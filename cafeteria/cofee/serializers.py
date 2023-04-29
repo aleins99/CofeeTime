@@ -27,3 +27,8 @@ class UserSerializer(serializers.ModelSerializer):
     def get_group_name(self, obj):
         group = Group.objects.filter(user=obj).first()
         return group.name if group else None
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        validated_data['password'] = make_password(password)
+        return super().create(validated_data)
