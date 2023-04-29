@@ -56,9 +56,9 @@ class UserView(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
             usuario = User.objects.get(username=data['username'])
-            usuario.password = "admin"
-            usuario.save()
             usuario.groups.add(Group.objects.get(name=data['group_name']))
-            return Response({"message": "Producto creado correctamente"}, status=status.HTTP_201_CREATED)
+
+            return Response({"message": "Usuario creado correctamente"}, status=status.HTTP_201_CREATED)
+
         else:
-            return Response({"message": "Error al crear el producto"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Error al crear el usuario"}, status=status.HTTP_400_BAD_REQUEST)
