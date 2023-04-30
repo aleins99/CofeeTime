@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 
+import PropTypes from "prop-types";
 const Productos = ({ userId }) => {
   const [productos, setProductos] = useState([]);
   const [user, setUser] = useState([]);
@@ -40,7 +40,12 @@ const Productos = ({ userId }) => {
     const newStrNum = strNum.slice(0, slc) + "." + strNum.slice(slc);
     return newStrNum;
   }
-
+  const handleLocalStorage = () => {
+    window.localStorage.setItem(
+      "precioAgregado",
+      JSON.stringify(1)
+     )
+  }
   return (
     <>
       <h1 className="text-center sm:text-left text-4xl">Productos</h1>
@@ -56,7 +61,7 @@ const Productos = ({ userId }) => {
                 Precio: <span>{addPeriod(producto.precio)} G.s </span>{" "}
               </p>
               <div className="flex justify-end">
-                <button className="text-white flex-end">Agregar al carrito</button>
+                <button className="text-white flex-end"><Link to="/pedidos/" state={producto.precio} onClick={handleLocalStorage}>Agregar al carrito</Link> </button>
               </div>
             </li>
           );

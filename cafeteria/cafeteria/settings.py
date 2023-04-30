@@ -89,10 +89,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'cofeedb',
-        'CLIENT': {
-            'host': 'mongodb://mongodb:27017',
-
-        }
+    
 
     }
 }
