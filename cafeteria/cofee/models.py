@@ -21,6 +21,7 @@ class Pedidos(models.Model):
     descripcion = models.ForeignKey(Productos, on_delete=models.CASCADE)
     fecha = models.DateTimeField()
     cantidad = models.FloatField(verbose_name='Cantidad')
+    cliente = models.CharField(max_length=100, null=True)
 
     def costo(self):
         return (self.cantidad * self.descripcion.precio)

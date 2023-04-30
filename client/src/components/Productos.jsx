@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 const Productos = ({ userId }) => {
   const [productos, setProductos] = useState([]);
+  const [carrito, setCarrito] = useState({
+    "productos" :[],
+    "total": 0
+  })
   const [user, setUser] = useState([]);
   useEffect(() => {
     fetch("http://localhost:8000/cofee/api/productos/", {
@@ -40,11 +44,14 @@ const Productos = ({ userId }) => {
     const newStrNum = strNum.slice(0, slc) + "." + strNum.slice(slc);
     return newStrNum;
   }
-  const handleLocalStorage = () => {
-    window.localStorage.setItem(
-      "precioAgregado",
-      JSON.stringify(1)
-     )
+  const handleLocalStorage = async (data) => {
+    let carritoProducto = await carrito.productos
+    carritoProducto.push(data.descripcion)
+    const obj = {
+      "productos": carritoProducto,
+      "total": data.precio + carrito?.total
+    }
+    setCarrito(obj);
   }
   return (
     <>
@@ -61,12 +68,17 @@ const Productos = ({ userId }) => {
                 Precio: <span>{addPeriod(producto.precio)} G.s </span>{" "}
               </p>
               <div className="flex justify-end">
-                <button className="text-white flex-end"><Link to="/pedidos/" state={producto.precio} onClick={handleLocalStorage}>Agregar al carrito</Link> </button>
+                <button className="text-white flex-end" onClick={(e) => handleLocalStorage(producto)}>
+                  Agregar al carrito  
+                </button>
               </div>
             </li>
           );
         })}
       </ul>
+      {user.group_name === "recepcionista" && (
+        <Link></Link>
+      )}
       {user.group_name === "admin" && (
         <Link to="/producto/agregar/">
           <button className="my-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
