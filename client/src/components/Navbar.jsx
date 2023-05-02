@@ -50,7 +50,12 @@ export default function Navbar({ onLogout, userId }) {
             )}
             <li>
               {" "}
-              <button className="text-white" onClick={logoutHandler}>Logout</button>
+              <button
+                className="text-white bg-blue-400"
+                onClick={logoutHandler}
+              >
+                Logout
+              </button>
             </li>
           </ul>
         </nav>

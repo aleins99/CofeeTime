@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, onError] = useState("");
   const loginHandle = (e) => {
     e.preventDefault();
     // login and get an user with JWT token
@@ -24,9 +24,18 @@ const Login = ({ onLogin }) => {
           "accessToken",
           JSON.stringify(tokenData.access)
         );
-        console.log(tokenData);
+        console.log("es esto", tokenData);
+        if (tokenData.detail) {
+          onError("Algo ha salido mal, Verifique sus credenciales");
+        }
+        if (tokenData.username || tokenData.password) {
+          onError("Los campos no pueden estar en blanco");
+        }
         console.log(jwtDecode(tokenData.access).user_id);
         onLogin(jwtDecode(tokenData.access).user_id);
+      })
+      .catch((error) => {
+        console.log("error", error);
       });
   };
 
@@ -36,7 +45,6 @@ const Login = ({ onLogin }) => {
         <img src={coffeeIcon} alt="Coffee Icon" width={100} />
         <h2>Coffee Time</h2>
         <p>Please login to your account</p>
-        <small>Use atuny0 / 9uQFF1Lh if you do not have an account</small>
         <input
           aria-label="Username"
           placeholder="Username"
@@ -55,6 +63,7 @@ const Login = ({ onLogin }) => {
             setPassword(e.target.value);
           }}
         />
+        {error && <p className="text-red-600">{error}</p>}
         <button type="submit">Login</button>
       </form>
     </div>

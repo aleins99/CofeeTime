@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import Pedido from "./Pedido"
-const Pedidos = () => {
+import Pedido from "./Pedido";
+import PropTypes from "prop-types";
+const Pedidos = ({ rol, userId }) => {
+  console.log("rol", rol);
   const [pedidos, setPedidos] = useState([]);
-  const location = useLocation()
-  const [precio, setPrecio] = useState(0)
   useEffect(() => {
     fetch("http://localhost:8000/cofee/api/pedidos/", {
       method: "GET" /* or POST/PUT/PATCH/DELETE */,
@@ -20,26 +19,30 @@ const Pedidos = () => {
         setPedidos(data);
       });
   }, []);
-  const handlePrecio = (data) => {
-    setPrecio(data)
-    return precio
-  }
+  const handlePedido = (id) => {
+    setPedidos(pedidos.filter((pedido) => pedido.id !== id));
+  };
   return (
     <>
-      <h2>Pedidos</h2>
-      <ul>
-      <Pedido location={location} precioTotal={handlePrecio} />
-        {pedidos.map((pedido) => {
+      <h1>Pedidos</h1>
+      <ul className="grid lg:grid-cols-4 gap-4 grid-cols-2 md:grid-cols-3 place-content-center">
+        {pedidos?.map((pedido) => {
           return (
-            <li key={pedido.id}>
-             
-            </li>
+            <Pedido
+              key={pedido.id}
+              {...pedido}
+              rol={rol}
+              userId={userId}
+              handlePedido={handlePedido}
+            />
           );
         })}
       </ul>
-      <p>Total: {precio }</p>
     </>
   );
 };
-
+Pedidos.propTypes = {
+  rol: PropTypes.string,
+  userId: PropTypes.string,
+};
 export default Pedidos;

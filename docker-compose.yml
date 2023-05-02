@@ -45,17 +45,6 @@ services:
 
     depends_on:
       - migration
-
-  migration:
-    image: app_back
-    command: python manage.py migrate
-    volumes:
-      - .:/django_mongodb_docker
-    links:
-      - mongodb
-    depends_on:
-      - make_migration
-
   make_migration:
     image: app_back
     command: python manage.py makemigrations
@@ -65,3 +54,12 @@ services:
       - mongodb
     depends_on:
       - mongodb
+  migration:
+    image: app_back
+    command: python manage.py migrate
+    volumes:
+      - .:/django_mongodb_docker
+    links:
+      - mongodb
+    depends_on:
+      - make_migration

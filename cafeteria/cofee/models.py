@@ -18,27 +18,25 @@ class Productos(models.Model):
 
 class Pedidos(models.Model):
     id = models.IntegerField(primary_key=True)
-    descripcion = models.ForeignKey(Productos, on_delete=models.CASCADE)
-    fecha = models.DateTimeField()
-    cantidad = models.FloatField(verbose_name='Cantidad')
+    pedidos = models.TextField(verbose_name='Pedidos', null=True, blank=True)
+    fecha = models.DateTimeField(blank=True, null=True)
+    cantidad = models.FloatField(
+        verbose_name='Cantidad', null=True, blank=True)
     cliente = models.CharField(max_length=100, null=True)
-
-    def costo(self):
-        return (self.cantidad * self.descripcion.precio)
-
     pedido = (
         ('1', 'Listo'),
         ('2', 'En proceso'),
     )
-    pedido = models.CharField(max_length=1, choices=pedido)
+    pedido = models.CharField(
+        max_length=1, choices=pedido, blank=True, null=True)
 
     def __str__(self):
-        return str(self.descripcion)
+        return str(self.pedidos)
 
     class Meta:
         verbose_name = 'pedido'
         verbose_name_plural = 'pedidos'
-        ordering = ['descripcion']
+        ordering = ['fecha']
 
 
 class Grupo(Group):

@@ -11,8 +11,7 @@ class ProductosAdmin(admin.ModelAdmin):
 
 @admin.register(Pedidos)
 class PedidosAdmin(admin.ModelAdmin):
-    list_display = ('descripcion', 'fecha', 'cantidad', 'costo')
-    search_fields = ['descripcion']
+    list_display = ('pedidos', 'fecha', 'cantidad')
 
 
 admin.site.register(Usuario)

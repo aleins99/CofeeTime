@@ -8,6 +8,7 @@ export default function AddProductos() {
   } = useForm();
   const navigate = useNavigate();
   const onSubmit = handleSubmit((data) => {
+    console.log("productosssss", data);
     fetch("http://localhost:8000/cofee/api/productos/", {
       method: "POST",
       headers: {

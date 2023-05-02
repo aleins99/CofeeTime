@@ -6,6 +6,7 @@ import Pedidos from "./Pedidos";
 import PropTypes from "prop-types";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddProductos from "./AddProductos";
+import AddPedido from "./AddPedido";
 const Home = ({ onLogout, userId }) => {
   const [user, setUser] = useState();
 
@@ -30,7 +31,7 @@ const Home = ({ onLogout, userId }) => {
 
   let content = "";
   if (role === "recepcionista" || role === "cocinero") {
-    content = <Pedidos />;
+    content = <Pedidos rol={role} />;
   } else if (role === "admin") {
     content = <Usuarios />;
   } else {
@@ -42,13 +43,14 @@ const Home = ({ onLogout, userId }) => {
       {role !== "" && (
         <Routes>
           <Route path="/" element={<>{content}</>}></Route>
-          <Route path="/pedidos" element={<Pedidos />}></Route>
+          <Route path="/pedidos" element={<Pedidos rol={role} />}></Route>
           <Route
             path="/productos"
             element={<Productos userId={userId} />}
           ></Route>
           <Route path="/usuarios" element={<Usuarios />}></Route>
           <Route path="/producto/agregar/" element={<AddProductos />}></Route>
+          <Route path="/pedido/agregar/" element={<AddPedido />}></Route>
         </Routes>
       )}
     </BrowserRouter>
