@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { addPeriod } from "../utils/addPeriod";
 import { useState, useEffect } from "react";
+import cartIcon from "../assets/grocery-15.svg";
+
 const Pedido = ({
   cliente,
   pedidos,
@@ -58,17 +60,17 @@ const Pedido = ({
   return (
     <li>
       <div className="grid grid-cols-3 max-w-sm rounded overflow-hidden shadow-lg px-4 py-8 pr-0 gap-2">
-        <p className="col-start-3 col-end-4">
+        <p className="col-start-4 col-end-5">
           {estado == "2" ? "En Proceso ⏱" : "Hecho ✅"}
         </p>
-        <p className="col-span-2">{fecha}</p>
-        <p className="col-span-2">{cliente}</p>
+        <p className="col-span-4">{fecha}</p>
+        <p className="col-span-4">{cliente}</p>
         {pedidos.map((e, index) => (
           <p key={index} className="col-span-2">
             ⭐ {e}
           </p>
         ))}
-        <p className="col-span-3">Total💲: {addPeriod(cantidad)} Gs.</p>
+        <p className="col-span-4">Total💲: {addPeriod(cantidad)} Gs.</p>
         {estado == "1" && rol === "recepcionista" ? (
           <button
             className="col-start-2 col-end-4"
@@ -81,7 +83,7 @@ const Pedido = ({
         )}
         {rol === "cocinero" && estado === "2" ? (
           <button
-            className="col-start-3 col-end-4"
+            className="col-start-4 col-end-4 mx-4"
             onClick={() => handleData()}
           >
             Pedido Listo

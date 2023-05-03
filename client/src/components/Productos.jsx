@@ -1,17 +1,19 @@
+/* eslint-disable react/prop-types */
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { addPeriod } from "../utils/addPeriod.js";
 import PropTypes from "prop-types";
-const Productos = ({ userId }) => {
-  console.log(userId);
+import { useLocation } from "react-router-dom";
+const Productos = (props) => {
   const [productos, setProductos] = useState([]);
-  const [carrito, setCarrito] = useState({
-    productos: [],
-    total: 0,
-  });
+  const { rol, carrito, setCarrito, countProductos, setCountProductos } = props;
+
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
   const [items, setItems] = useState(0);
-  const [user, setUser] = useState([]);
+  const location = useLocation();
+  const data = location.state;
+  console.log("data", data);
   useEffect(() => {
     fetch("http://localhost:8000/cofee/api/productos/", {
       method: "GET" /* or POST/PUT/PATCH/DELETE */,
@@ -26,31 +28,21 @@ const Productos = ({ userId }) => {
       .then((data) => {
         setProductos(data);
       });
-    fetch("http://localhost:8000/cofee/api/usuarios/" + userId, {
-      method: "GET" /* or POST/PUT/PATCH/DELETE */,
-      headers: {
-        Authorization: `Bearer ${JSON.parse(
-          window.localStorage.getItem("accessToken")
-        )}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((userData) => {
-        setUser(userData);
-      });
-  }, [userId]);
+  }, []);
   useEffect(() => {
     localStorage.setItem("productos", JSON.stringify(carrito.productos));
     localStorage.setItem("total", JSON.stringify(carrito.total));
-  }, [carrito]);
+    console.log(props);
+  }, [carrito, props]);
 
   const handleLocalStorage = (data) => {
+    // para mostrar mensaje de validacion
     setItems(1);
     setMostrarMensaje(true);
     setTimeout(() => {
       setMostrarMensaje(false);
     }, 1200);
+    // agregar al carrito
     let carritoProducto = carrito.productos;
     carritoProducto.push(data.descripcion.toUpperCase());
     setCarrito((prevState) => ({
@@ -81,7 +73,7 @@ const Productos = ({ userId }) => {
                 Precio: <span>{addPeriod(producto.precio)} G.s </span>{" "}
               </p>
               <div className="flex justify-end">
-                {user.group_name === "recepcionista" && (
+                {rol === "recepcionista" && (
                   <button
                     className="text-white flex-end bg-blue-600"
                     onClick={() => handleLocalStorage(producto)}
@@ -94,16 +86,8 @@ const Productos = ({ userId }) => {
           );
         })}
       </ul>
-      {user.group_name === "recepcionista" && items == 1 ? (
-        <Link to="/pedido/agregar/">
-          <button className="my-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Finalizar Pedido
-          </button>
-        </Link>
-      ) : (
-        ""
-      )}
-      {user.group_name === "admin" && (
+
+      {rol === "admin" && (
         <Link to="/producto/agregar/">
           <button className="my-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Agregar Producto
@@ -116,7 +100,7 @@ const Productos = ({ userId }) => {
 
 export default Productos;
 Productos.propTypes = {
-  userId: PropTypes.number,
+  group: PropTypes.string,
 };
 
 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

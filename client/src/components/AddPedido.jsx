@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
+
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-export default function AddPedidos() {
+export default function AddPedidos({ carrito, setCarrito }) {
   const {
     register,
     handleSubmit,
@@ -44,6 +46,13 @@ export default function AddPedidos() {
         response.json();
         localStorage.removeItem("total");
         localStorage.removeItem("productos");
+        /* eslint-disable react/prop-types */
+        const initialState = {
+          productos: [],
+          total: 0,
+        };
+        setCarrito({ ...initialState });
+
         navigate("/pedidos");
       })
       .then((data) => console.log(data))

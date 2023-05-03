@@ -2,7 +2,6 @@ import { useState } from "react";
 import coffeeIcon from "../assets/coffee.svg";
 import jwtDecode from "jwt-decode";
 import PropTypes from "prop-types";
-
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

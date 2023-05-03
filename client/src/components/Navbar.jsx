@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-export default function Navbar({ onLogout, userId }) {
-  const [user, setUser] = useState();
+import Carrito from "./Carrito";
 
+export default function Navbar({ onLogout, userId, carrito, countProductos }) {
+  const [user, setUser] = useState();
   useEffect(() => {
     fetch("http://localhost:8000/cofee/api/usuarios/" + userId, {
       method: "GET" /* or POST/PUT/PATCH/DELETE */,
@@ -19,10 +21,13 @@ export default function Navbar({ onLogout, userId }) {
         setUser(userData);
       });
   }, [userId]);
+
   const logoutHandler = () => {
     onLogout();
   };
+
   const role = user ? user.group_name : "";
+
   return (
     <div className="header">
       {user && (
@@ -43,11 +48,15 @@ export default function Navbar({ onLogout, userId }) {
             )}
             {role == "recepcionista" || role == "cocinero" ? (
               <li>
-                <Link to={"/pedidos"}>Carrito</Link>
+                <Link to={"/pedidos"}>Pedidos</Link>
               </li>
             ) : (
               ""
             )}
+            {role === "recepcionista" && (
+              <Carrito carrito={carrito} countProductos={countProductos} />
+            )}
+
             <li>
               {" "}
               <button

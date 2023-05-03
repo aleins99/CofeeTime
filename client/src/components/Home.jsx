@@ -7,8 +7,14 @@ import PropTypes from "prop-types";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddProductos from "./AddProductos";
 import AddPedido from "./AddPedido";
-const Home = ({ onLogout, userId }) => {
+import Login from "./Login";
+const Home = ({ onLogout, userId, onLogin }) => {
   const [user, setUser] = useState();
+  const [carrito, setCarrito] = useState({
+    productos: [],
+    total: 0,
+  });
+  const [countProductos, setCountProductos] = useState(0);
 
   useEffect(() => {
     fetch("http://localhost:8000/cofee/api/usuarios/" + userId, {
@@ -39,19 +45,39 @@ const Home = ({ onLogout, userId }) => {
   }
   return (
     <BrowserRouter>
-      <Navbar onLogout={onLogout} userId={userId} />
-      {role !== "" && (
-        <Routes>
-          <Route path="/" element={<>{content}</>}></Route>
-          <Route path="/pedidos" element={<Pedidos rol={role} />}></Route>
-          <Route
-            path="/productos"
-            element={<Productos userId={userId} />}
-          ></Route>
-          <Route path="/usuarios" element={<Usuarios />}></Route>
-          <Route path="/producto/agregar/" element={<AddProductos />}></Route>
-          <Route path="/pedido/agregar/" element={<AddPedido />}></Route>
-        </Routes>
+      {role !== "" ? (
+        <>
+          <Navbar
+            onLogout={onLogout}
+            userId={userId}
+            carrito={carrito}
+            countProductos={countProductos}
+          />
+          <Routes>
+            <Route path="/" element={<>{content}</>}></Route>
+            <Route path="/pedidos" element={<Pedidos rol={role} />}></Route>
+            <Route
+              path="/productos"
+              element={
+                <Productos
+                  rol={role}
+                  carrito={carrito}
+                  setCarrito={setCarrito}
+                  countProductos={countProductos}
+                  setCountProductos={setCountProductos}
+                />
+              }
+            ></Route>
+            <Route path="/usuarios" element={<Usuarios />}></Route>
+            <Route path="/producto/agregar/" element={<AddProductos />}></Route>
+            <Route
+              path="/pedido/agregar/"
+              element={<AddPedido setCarrito={setCarrito} carrito={carrito} />}
+            ></Route>
+          </Routes>
+        </>
+      ) : (
+        <Login onLogin={onLogin} />
       )}
     </BrowserRouter>
   );
@@ -59,5 +85,6 @@ const Home = ({ onLogout, userId }) => {
 Home.propTypes = {
   onLogout: PropTypes.func.isRequired,
   userId: PropTypes.number,
+  onLogin: PropTypes.func.isRequired,
 };
 export default Home;
