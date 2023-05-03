@@ -10,28 +10,24 @@ const Login = ({ onLogin }) => {
   const loginHandle = async (e) => {
     e.preventDefault();
     // login and get an user with JWT token
-    const response = await axios.post(
-      "http://localhost:8000/cofee/api/token/",
-      {
+
+    axios
+      .post("http://localhost:8000/cofee/api/token/", {
         username,
         password,
-      }
-    );
-    if (response.status === 200) {
-      window.localStorage.setItem("authToken", JSON.stringify(response.data));
-
-      console.log("es esto", response.data);
-      if (response.data.detail) {
-        onError("Algo ha salido mal, Verifique sus credenciales");
-      }
-      if (response.data.username || response.data.password) {
-        onError("Los campos no pueden estar en blanco");
-      }
-      console.log(jwtDecode(response.data.access).user_id);
-      onLogin(jwtDecode(response.data.access).user_id);
-    } else {
-      console.error("Invalid");
-    }
+      })
+      .then(function (response) {
+        console.log(response);
+        window.localStorage.setItem("authToken", JSON.stringify(response.data));
+        onLogin(jwtDecode(response.data.access).user_id);
+      })
+      .catch(function (error) {
+        if (error.response.status === 400) {
+          onError("Los campos no pueden estar en blanco");
+        } else {
+          onError("Algo ha salido mal, Verifique sus credenciales");
+        }
+      });
   };
 
   return (

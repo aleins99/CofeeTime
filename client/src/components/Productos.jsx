@@ -15,7 +15,7 @@ const Productos = (props) => {
 
   useEffect(() => {
     getProductos();
-  }, []);
+  });
   let getProductos = async () => {
     let response = await axiosInstance.get("productos/");
     if (response.status === 200) {
