@@ -31,7 +31,15 @@ const Home = ({ onLogout, userId }) => {
 
   let content = "";
   if (role === "recepcionista" || role === "cocinero") {
-    content = <Pedidos rol={role} />;
+    content = (
+      <Pedidos
+        rol={role}
+        carrito={carrito}
+        setCarrito={setCarrito}
+        countProductos={countProductos}
+        setCountProductos={setCountProductos}
+      />
+    );
   } else if (role === "admin") {
     content = <Usuarios />;
   } else {

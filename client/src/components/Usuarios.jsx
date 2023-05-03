@@ -15,7 +15,7 @@ const Usuarios = () => {
     getUsuarios();
   }, []);
   return (
-    <>
+    <div className="px-5 py-5">
       <h1 className="text-center sm:text-left text-4xl">Lista de Usuarios</h1>
       <ul className="grid lg:grid-cols-4 gap-4 grid-cols-2 md:grid-cols-3 place-content-center">
         {usuarios.map((usuario) => {
@@ -45,7 +45,7 @@ const Usuarios = () => {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 };
 

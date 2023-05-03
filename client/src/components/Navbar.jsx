@@ -27,7 +27,9 @@ export default function Navbar({ onLogout, userId, carrito, countProductos }) {
     <div className="header">
       {user && (
         <nav className="navbar">
-          <h2 className="left">Bienvenido {user.username}!</h2>
+          <h2 className="left">
+            Bienvenido {user.first_name + " " + user.last_name}!
+          </h2>
           <ul>
             {role == "recepcionista" || role == "admin" ? (
               <li>

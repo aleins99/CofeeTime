@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { addPeriod } from "../utils/addPeriod.js";
 import PropTypes from "prop-types";
-import { useLocation } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance.js";
 const Productos = (props) => {
   const [productos, setProductos] = useState([]);
@@ -44,7 +43,7 @@ const Productos = (props) => {
     }));
   };
   return (
-    <>
+    <div className="px-5 py-5">
       {mostrarMensaje && (
         <div className="w-full relative relative">
           <button className="absolute right-0 my-2 mx-5 bg-green-800 text-slate-100 animate-blunded">
@@ -87,7 +86,7 @@ const Productos = (props) => {
           </button>
         </Link>
       )}
-    </>
+    </div>
   );
 };
 
