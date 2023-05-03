@@ -2,40 +2,36 @@ import { useState } from "react";
 import coffeeIcon from "../assets/coffee.svg";
 import jwtDecode from "jwt-decode";
 import PropTypes from "prop-types";
+import axios from "axios";
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, onError] = useState("");
-  const loginHandle = (e) => {
+  const loginHandle = async (e) => {
     e.preventDefault();
     // login and get an user with JWT token
-    fetch("http://localhost:8000/cofee/api/token/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    const response = await axios.post(
+      "http://localhost:8000/cofee/api/token/",
+      {
         username,
         password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((tokenData) => {
-        window.localStorage.setItem(
-          "accessToken",
-          JSON.stringify(tokenData.access)
-        );
-        console.log("es esto", tokenData);
-        if (tokenData.detail) {
-          onError("Algo ha salido mal, Verifique sus credenciales");
-        }
-        if (tokenData.username || tokenData.password) {
-          onError("Los campos no pueden estar en blanco");
-        }
-        console.log(jwtDecode(tokenData.access).user_id);
-        onLogin(jwtDecode(tokenData.access).user_id);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+      }
+    );
+    if (response.status === 200) {
+      window.localStorage.setItem("authToken", JSON.stringify(response.data));
+
+      console.log("es esto", response.data);
+      if (response.data.detail) {
+        onError("Algo ha salido mal, Verifique sus credenciales");
+      }
+      if (response.data.username || response.data.password) {
+        onError("Los campos no pueden estar en blanco");
+      }
+      console.log(jwtDecode(response.data.access).user_id);
+      onLogin(jwtDecode(response.data.access).user_id);
+    } else {
+      console.error("Invalid");
+    }
   };
 
   return (

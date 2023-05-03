@@ -7,8 +7,8 @@ import PropTypes from "prop-types";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddProductos from "./AddProductos";
 import AddPedido from "./AddPedido";
-import Login from "./Login";
-const Home = ({ onLogout, userId, onLogin }) => {
+import axiosInstance from "../utils/axiosInstance";
+const Home = ({ onLogout, userId }) => {
   const [user, setUser] = useState();
   const [carrito, setCarrito] = useState({
     productos: [],
@@ -17,19 +17,13 @@ const Home = ({ onLogout, userId, onLogin }) => {
   const [countProductos, setCountProductos] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:8000/cofee/api/usuarios/" + userId, {
-      method: "GET" /* or POST/PUT/PATCH/DELETE */,
-      headers: {
-        Authorization: `Bearer ${JSON.parse(
-          window.localStorage.getItem("accessToken")
-        )}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((userData) => {
-        setUser(userData);
-      });
+    let getUsuario = async () => {
+      let response = await axiosInstance.get(`usuarios/${userId}`);
+      if (response.status === 200) {
+        setUser(response.data);
+      }
+    };
+    getUsuario();
   }, [userId]);
 
   const role = user ? user.group_name : null;
@@ -45,7 +39,7 @@ const Home = ({ onLogout, userId, onLogin }) => {
   }
   return (
     <BrowserRouter>
-      {role !== "" ? (
+      {role !== "" && (
         <>
           <Navbar
             onLogout={onLogout}
@@ -76,8 +70,6 @@ const Home = ({ onLogout, userId, onLogin }) => {
             ></Route>
           </Routes>
         </>
-      ) : (
-        <Login onLogin={onLogin} />
       )}
     </BrowserRouter>
   );

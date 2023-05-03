@@ -23,30 +23,10 @@ class ProductoView(viewsets.ModelViewSet):
             permission_classes = [isAdmin]
         return [permission() for permission in permission_classes]
 
-    def create(self, request):
-        data = request.data
-        data['id'] = Productos.objects.all().count() + 1
-        serializer = self.serializer_class(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "Producto creado correctamente"}, status=status.HTTP_201_CREATED)
-        else:
-            return Response({"message": "Error al crear el producto"}, status=status.HTTP_400_BAD_REQUEST)
-
 
 class PedidoView(viewsets.ModelViewSet):
     serializer_class = PedidoSerializer
     queryset = Pedidos.objects.all()
-
-    def create(self, request):
-        data = request.data
-        data['id'] = Pedidos.objects.all().count() + 1
-        serializer = self.serializer_class(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "Producto creado correctamente"}, status=status.HTTP_201_CREATED)
-        else:
-            return Response({"message": "Error al crear el producto"}, status=status.HTTP_400_BAD_REQUEST)
 
     def get_permissions(self):
         permission_classes = list()

@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
+import uuid
 
 
 class Productos(models.Model):
-    id = models.IntegerField(primary_key=True)
+
     descripcion = models.CharField(max_length=100, verbose_name='Descripcion')
     precio = models.FloatField(verbose_name='Precio')
 
@@ -13,11 +14,10 @@ class Productos(models.Model):
     class Meta:
         verbose_name = 'producto'
         verbose_name_plural = 'productos'
-        ordering = ['id']
 
 
 class Pedidos(models.Model):
-    id = models.IntegerField(primary_key=True)
+
     pedidos = models.TextField(verbose_name='Pedidos', null=True, blank=True)
     fecha = models.DateTimeField(blank=True, null=True)
     cantidad = models.FloatField(

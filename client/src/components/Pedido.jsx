@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { addPeriod } from "../utils/addPeriod";
-import { useState, useEffect } from "react";
-import cartIcon from "../assets/grocery-15.svg";
+import { useState } from "react";
+import axiosInstance from "../utils/axiosInstance";
 
 const Pedido = ({
   cliente,
@@ -15,47 +15,23 @@ const Pedido = ({
 }) => {
   pedidos = pedidos.split(",");
   const [estado, setEstado] = useState(pedido);
-  function handleData() {
+  async function handleData() {
     const data = {};
     data.pedido = "1";
-    console.log(data);
-    fetch(`http://localhost:8000/cofee/api/pedidos/${id}/`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${JSON.parse(
-          window.localStorage.getItem("accessToken")
-        )}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        response.json();
-        setEstado("1");
-      })
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+    const response = await axiosInstance.patch(`pedidos/${id}/`, data);
+    if (response.status === 200) {
+      setEstado("1");
+    }
   }
-  function pagoPedido() {
-    fetch(`http://localhost:8000/cofee/api/pedidos/${id}/`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${JSON.parse(
-          window.localStorage.getItem("accessToken")
-        )}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error al eliminar el dato");
-        }
-        handlePedido(parseInt(id));
-      })
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+  async function pagoPedido() {
+    const response = await axiosInstance.delete(`pedidos/${id}/`);
+    console.log(response);
+    if (response.status === 204) {
+      handlePedido(parseInt(id));
+    } else {
+      console.error("Error al eliminar");
+    }
   }
-
   console.log("rol", rol);
   return (
     <li>
@@ -73,7 +49,7 @@ const Pedido = ({
         <p className="col-span-4">Total💲: {addPeriod(cantidad)} Gs.</p>
         {estado == "1" && rol === "recepcionista" ? (
           <button
-            className="col-start-2 col-end-4"
+            className="col-start-3 col-end-6 mx-3"
             onClick={() => pagoPedido()}
           >
             <p className="w-full">Realizar pago</p>

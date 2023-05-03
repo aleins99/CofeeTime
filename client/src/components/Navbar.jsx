@@ -3,23 +3,18 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Carrito from "./Carrito";
+import axiosInstance from "../utils/axiosInstance";
 
 export default function Navbar({ onLogout, userId, carrito, countProductos }) {
   const [user, setUser] = useState();
   useEffect(() => {
-    fetch("http://localhost:8000/cofee/api/usuarios/" + userId, {
-      method: "GET" /* or POST/PUT/PATCH/DELETE */,
-      headers: {
-        Authorization: `Bearer ${JSON.parse(
-          window.localStorage.getItem("accessToken")
-        )}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((userData) => {
-        setUser(userData);
-      });
+    const handleUser = async () => {
+      const response = await axiosInstance.get(`usuarios/${userId}`);
+      if (response.status === 200) {
+        setUser(response.data);
+      }
+    };
+    handleUser();
   }, [userId]);
 
   const logoutHandler = () => {

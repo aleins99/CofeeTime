@@ -1,23 +1,18 @@
 import { useState, useEffect } from "react";
 import userIcon from "../assets/user.svg";
+import axiosInstance from "../utils/axiosInstance";
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/cofee/api/usuarios/", {
-      method: "GET" /* or POST/PUT/PATCH/DELETE */,
-      headers: {
-        Authorization: `Bearer ${JSON.parse(
-          window.localStorage.getItem("accessToken")
-        )}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUsuarios(data);
-      });
+    let getUsuarios = async () => {
+      let response = await axiosInstance.get("usuarios/");
+      if (response.status === 200) {
+        setUsuarios(response.data);
+      }
+    };
+    getUsuarios();
   }, []);
   return (
     <>

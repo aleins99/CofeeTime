@@ -5,14 +5,10 @@ import Home from "./components/Home";
 import jwtDecode from "jwt-decode";
 function App() {
   const [userId, setUserId] = useState(null);
-  const [login, setLogin] = useState(false);
   useEffect(() => {
-    const token = window.localStorage.getItem("accessToken");
+    const token = window.localStorage.getItem("authToken");
     if (token) {
-      setUserId(jwtDecode(JSON.parse(token)).user_id);
-      setLogin(true);
-    } else {
-      setLogin(false);
+      setUserId(jwtDecode(JSON.parse(token).access).user_id);
     }
   }, []);
 
@@ -23,12 +19,12 @@ function App() {
 
   const onLogoutHandler = () => {
     setUserId(null);
-    window.localStorage.removeItem("accessToken");
+    window.localStorage.removeItem("authToken");
   };
 
   return (
     <>
-      {userId && login ? (
+      {userId ? (
         <Home
           onLogout={onLogoutHandler}
           userId={userId}

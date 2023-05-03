@@ -6,7 +6,7 @@ import { Fragment, useState, useEffect } from "react";
 import { addPeriod } from "../utils/addPeriod";
 import { Link } from "react-router-dom";
 
-export default function Carrito({ rol, carrito, countProductos }) {
+export default function Carrito({ carrito }) {
   // eslint-disable-next-line react/prop-types
   const [productos, setProductos] = useState(carrito.productos);
   console.log(productos);

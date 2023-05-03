@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-export default function AddPedidos({ carrito, setCarrito }) {
+import axiosInstance from "../utils/axiosInstance";
+export default function AddPedidos({ setCarrito }) {
   const {
     register,
     handleSubmit,
@@ -24,39 +25,27 @@ export default function AddPedidos({ carrito, setCarrito }) {
       setProductos(filteredProducts.join(","));
     };
     getLocalStorage();
-  });
+  }, []);
 
   const navigate = useNavigate();
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     data.pedidos = productos;
     data.cantidad = parseInt(total);
     data.pedido = "2";
-    console.log("pedido", data);
-    fetch("http://localhost:8000/cofee/api/pedidos/", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${JSON.parse(
-          window.localStorage.getItem("accessToken")
-        )}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        response.json();
-        localStorage.removeItem("total");
-        localStorage.removeItem("productos");
-        /* eslint-disable react/prop-types */
-        const initialState = {
-          productos: [],
-          total: 0,
-        };
-        setCarrito({ ...initialState });
-
-        navigate("/pedidos");
-      })
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+    const response = await axiosInstance.post("pedidos/", data);
+    if (response.status === 201) {
+      localStorage.removeItem("total");
+      localStorage.removeItem("productos");
+      /* eslint-disable react/prop-types */
+      const initialState = {
+        productos: [],
+        total: 0,
+      };
+      setCarrito({ ...initialState });
+      navigate("/pedidos");
+    } else {
+      console.error("Invalid");
+    }
   });
   return (
     <div className="w-full grid place-items-center my-10 ">

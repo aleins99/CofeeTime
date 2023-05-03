@@ -5,30 +5,23 @@ import { Link } from "react-router-dom";
 import { addPeriod } from "../utils/addPeriod.js";
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
+import axiosInstance from "../utils/axiosInstance.js";
 const Productos = (props) => {
   const [productos, setProductos] = useState([]);
   const { rol, carrito, setCarrito, countProductos, setCountProductos } = props;
 
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
   const [items, setItems] = useState(0);
-  const location = useLocation();
-  const data = location.state;
-  console.log("data", data);
+
   useEffect(() => {
-    fetch("http://localhost:8000/cofee/api/productos/", {
-      method: "GET" /* or POST/PUT/PATCH/DELETE */,
-      headers: {
-        Authorization: `Bearer ${JSON.parse(
-          window.localStorage.getItem("accessToken")
-        )}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProductos(data);
-      });
+    getProductos();
   }, []);
+  let getProductos = async () => {
+    let response = await axiosInstance.get("productos/");
+    if (response.status === 200) {
+      setProductos(response.data);
+    }
+  };
   useEffect(() => {
     localStorage.setItem("productos", JSON.stringify(carrito.productos));
     localStorage.setItem("total", JSON.stringify(carrito.total));

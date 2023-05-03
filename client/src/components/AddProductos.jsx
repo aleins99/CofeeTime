@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../utils/axiosInstance";
 export default function AddProductos() {
   const {
     register,
@@ -7,24 +8,13 @@ export default function AddProductos() {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const onSubmit = handleSubmit((data) => {
-    console.log("productosssss", data);
-    fetch("http://localhost:8000/cofee/api/productos/", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${JSON.parse(
-          window.localStorage.getItem("accessToken")
-        )}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        response.json();
-        navigate("/productos");
-      })
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+  const onSubmit = handleSubmit(async (data) => {
+    const response = await axiosInstance.post("productos/", data);
+    if (response.status === 201) {
+      navigate("/productos");
+    } else {
+      console.error("Invalid");
+    }
   });
   return (
     <div className="w-full grid place-items-center my-10 ">
