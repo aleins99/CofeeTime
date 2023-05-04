@@ -41,12 +41,9 @@ export default function Carrito({ carrito }) {
             {productos.map((link, index) => (
               <div className="py-1" key={index}>
                 <Menu.Item as="a">
-                  <a
-                    href="#"
-                    className="text-gray-900 w-full block px-4 py-2 text-sm"
-                  >
+                  <p className="text-gray-900 w-full block px-4 py-2 text-sm">
                     {link}
-                  </a>
+                  </p>
                 </Menu.Item>
               </div>
             ))}
@@ -59,11 +56,11 @@ export default function Carrito({ carrito }) {
               <Menu.Item as="a" className="w-full ">
                 <Link
                   to="/pedido/agregar/"
-                  className=" w-full block px-4 py-2 text-sm bg-gray-200"
+                  className="w-full  text-sm bg-gray-200"
                 >
-                  <p className="hover:text-green-500 text-gray-900">
+                  <button className="w-full bg-slate-800 hover:bg-slate-700 dark:bg-blue-500 dark:hover:bg-blue-700 text-white">
                     Finalizar Pedido
-                  </p>
+                  </button>
                 </Link>
               </Menu.Item>
             )}

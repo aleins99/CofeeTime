@@ -48,7 +48,7 @@ const Home = ({ onLogout, userId }) => {
   return (
     <BrowserRouter>
       {role !== "" && (
-        <>
+        <div className="h-full">
           <Navbar
             onLogout={onLogout}
             userId={userId}
@@ -77,7 +77,7 @@ const Home = ({ onLogout, userId }) => {
               element={<AddPedido setCarrito={setCarrito} carrito={carrito} />}
             ></Route>
           </Routes>
-        </>
+        </div>
       )}
     </BrowserRouter>
   );

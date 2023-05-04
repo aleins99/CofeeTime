@@ -14,11 +14,12 @@ const Productos = (props) => {
 
   useEffect(() => {
     getProductos();
-  });
+  }, []);
   let getProductos = async () => {
     let response = await axiosInstance.get("productos/");
     if (response.status === 200) {
       setProductos(response.data);
+      console.log(productos);
     }
   };
   useEffect(() => {
@@ -43,7 +44,7 @@ const Productos = (props) => {
     }));
   };
   return (
-    <div className="px-5 py-5">
+    <div className="px-5 py-5 dark:bg-slate-800 dark:text-white h-full">
       {mostrarMensaje && (
         <div className="w-full relative relative">
           <button className="absolute right-0 my-2 mx-5 bg-green-800 text-slate-100 animate-blunded">
@@ -58,16 +59,19 @@ const Productos = (props) => {
           return (
             <li
               key={producto.id}
-              className="max-w-sm rounded overflow-hidden shadow-lg px-4 py-8"
+              className="max-w-sm rounded overflow-hidden shadow-lg px-4 py-8 flex flex-col justify-between"
             >
-              <p>{producto.descripcion.toUpperCase()}</p>
-              <p className="text-gray-800">
+              {producto.imagen && (
+                <img src={producto.imagen} className="w-[85px] h-25 my-5" />
+              )}
+              <p className="font-bold">{producto.descripcion.toUpperCase()}</p>
+              <p className="">
                 Precio: <span>{addPeriod(producto.precio)} G.s </span>{" "}
               </p>
               <div className="flex justify-end">
                 {rol === "recepcionista" && (
                   <button
-                    className="text-white flex-end bg-blue-600"
+                    className="bg-slate-800 hover:bg-slate-700 dark:bg-blue-500 dark:hover:bg-blue-700 text-white flex-end dark:bg-blue-600"
                     onClick={() => handleLocalStorage(producto)}
                   >
                     Agregar al carrito
@@ -81,7 +85,7 @@ const Productos = (props) => {
 
       {rol === "admin" && (
         <Link to="/producto/agregar/">
-          <button className="my-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <button className="my-10 bg-slate-800 hover:bg-slate-700 dark:bg-blue-500 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Agregar Producto
           </button>
         </Link>
@@ -94,7 +98,3 @@ export default Productos;
 Productos.propTypes = {
   group: PropTypes.string,
 };
-
-<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-  Agregar Producto
-</button>;

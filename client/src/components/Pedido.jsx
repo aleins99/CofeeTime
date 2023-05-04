@@ -49,7 +49,7 @@ const Pedido = ({
         <p className="col-span-4">Total💲: {addPeriod(cantidad)} Gs.</p>
         {estado == "1" && rol === "recepcionista" ? (
           <button
-            className="col-start-3 col-end-6 mx-3"
+            className="col-start-3 col-end-6 mx-3 bg-slate-800 hover:bg-slate-700 dark:bg-blue-500 dark:hover:bg-blue-700 text-white flex-end dark:bg-blue-600"
             onClick={() => pagoPedido()}
           >
             <p className="w-full">Realizar pago</p>
@@ -59,7 +59,7 @@ const Pedido = ({
         )}
         {rol === "cocinero" && estado === "2" ? (
           <button
-            className="col-start-4 col-end-4 mx-4"
+            className="bg-slate-800 hover:bg-slate-700 dark:bg-blue-500 dark:hover:bg-blue-700 text-white flex-end dark:bg-blue-600 col-start-4 col-end-4 mx-4"
             onClick={() => handleData()}
           >
             Pedido Listo
