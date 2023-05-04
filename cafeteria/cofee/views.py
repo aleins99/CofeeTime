@@ -9,11 +9,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from .permissions import IsRecepcionista, IsRecepcionistaOrCocinero, isAdmin, IsRecepcionistaOrAdmin
 from django.core import serializers
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class ProductoView(viewsets.ModelViewSet):
+
     serializer_class = ProductoSerializer
     queryset = Productos.objects.all()
+    parser_classes = (MultiPartParser, FormParser)
 
     def get_permissions(self):
         permission_classes = list()
@@ -22,6 +25,9 @@ class ProductoView(viewsets.ModelViewSet):
         if permission_classes.__len__() == 0:
             permission_classes = [isAdmin]
         return [permission() for permission in permission_classes]
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
 
 
 class PedidoView(viewsets.ModelViewSet):

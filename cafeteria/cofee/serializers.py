@@ -5,6 +5,10 @@ from django.contrib.auth.hashers import make_password
 
 
 class ProductoSerializer(serializers.ModelSerializer):
+    imagen = serializers.ImageField(required=False)
+    creator = serializers.ReadOnlyField(source='creator.username')
+    creator_id = serializers.ReadOnlyField(source='creator.id')
+
     class Meta:
         model = Productos
         fields = '__all__'

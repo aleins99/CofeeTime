@@ -3,10 +3,16 @@ from django.contrib.auth.models import User, Group
 import uuid
 
 
-class Productos(models.Model):
+def upload_to(instance, filename):
+    return 'productos/{filename}'.format(filename=filename)
 
+
+class Productos(models.Model):
+    creator = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="listings", null=True)
     descripcion = models.CharField(max_length=100, verbose_name='Descripcion')
     precio = models.FloatField(verbose_name='Precio')
+    imagen = models.ImageField(upload_to="upload_to", null=True, blank=True)
 
     def __str__(self):
         return str(self.descripcion)
