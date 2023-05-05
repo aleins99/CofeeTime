@@ -42,7 +42,7 @@ const Pedido = ({
         <p className="col-span-4">{fecha}</p>
         <p className="col-span-4">{cliente}</p>
         {pedidos.map((e, index) => (
-          <p key={index} className="col-span-2">
+          <p key={index} className="col-span-4">
             ⭐ {e}
           </p>
         ))}

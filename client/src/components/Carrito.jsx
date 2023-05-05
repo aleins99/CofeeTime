@@ -23,7 +23,7 @@ export default function Carrito({ carrito }) {
     <Menu as="div" className="relative inline-block text-left">
       <div className="focus:border-rose-600">
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-blue-50 focus:outline-blue-400">
-          <img src={cartIcon} className="h-5 w-5" alt="" />
+          <img src={cartIcon} className="h-5 w-5 max-w-none	" alt="" />
         </Menu.Button>
       </div>
 

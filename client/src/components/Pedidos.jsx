@@ -9,14 +9,15 @@ const Pedidos = ({ rol, userId }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let getPedidos = async () => {
+      let response = await axiosInstance.get("pedidos/");
+      if (response.status === 200) {
+        setPedidos(response.data);
+      }
+    };
     getPedidos();
   }, []);
-  let getPedidos = async () => {
-    let response = await axiosInstance.get("pedidos/");
-    if (response.status === 200) {
-      setPedidos(response.data);
-    }
-  };
+
   const handlePedido = (id) => {
     setPedidos(pedidos.filter((pedido) => pedido.id !== id));
   };

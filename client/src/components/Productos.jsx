@@ -7,10 +7,9 @@ import PropTypes from "prop-types";
 import axiosInstance from "../utils/axiosInstance.js";
 const Productos = (props) => {
   const [productos, setProductos] = useState([]);
-  const { rol, carrito, setCarrito, countProductos, setCountProductos } = props;
+  const { rol, carrito, setCarrito } = props;
 
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
-  const [items, setItems] = useState(0);
 
   useEffect(() => {
     getProductos();
@@ -22,6 +21,16 @@ const Productos = (props) => {
       console.log(productos);
     }
   };
+  async function eliminarProducto(id) {
+    const response = await axiosInstance.delete(`productos/${id}/`);
+    console.log(response);
+    if (response.status === 204) {
+      setProductos(productos.filter((producto) => producto.id !== id));
+    } else {
+      console.error("Error al eliminar");
+    }
+  }
+
   useEffect(() => {
     localStorage.setItem("productos", JSON.stringify(carrito.productos));
     localStorage.setItem("total", JSON.stringify(carrito.total));
@@ -30,7 +39,6 @@ const Productos = (props) => {
 
   const handleLocalStorage = (data) => {
     // para mostrar mensaje de validacion
-    setItems(1);
     setMostrarMensaje(true);
     setTimeout(() => {
       setMostrarMensaje(false);
@@ -75,6 +83,16 @@ const Productos = (props) => {
                     onClick={() => handleLocalStorage(producto)}
                   >
                     Agregar al carrito
+                  </button>
+                )}
+              </div>
+              <div className="flex justify-end">
+                {rol === "admin" && (
+                  <button
+                    className="bg-slate-800 hover:bg-slate-700 dark:bg-blue-500 dark:hover:bg-blue-700 text-white flex-end dark:bg-blue-600"
+                    onClick={() => eliminarProducto(producto.id)}
+                  >
+                    Eliminar Producto
                   </button>
                 )}
               </div>

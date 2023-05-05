@@ -82,7 +82,11 @@ export default function AddProductos() {
             id="product_image"
             type="file"
             onChange={handleImageUpload}
+            {...register("imagen", { required: true })}
           />
+          {errors.imagen && (
+            <span className="text-red-600">Este campo es requerido</span>
+          )}
         </div>
         <div className="flex items-center justify-between">
           <button className="bg-slate-800 hover:bg-slate-700 dark:bg-blue-500 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
