@@ -18,7 +18,7 @@ const Home = ({ onLogout, userId }) => {
 
   useEffect(() => {
     let getUsuario = async () => {
-      let response = await axiosInstance.get(`usuarios/${userId}`);
+      let response = await axiosInstance.get(`usuarios/${userId}/`);
       if (response.status === 200) {
         setUser(response.data);
       }

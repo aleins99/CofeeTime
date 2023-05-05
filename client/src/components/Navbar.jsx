@@ -11,7 +11,7 @@ export default function Navbar({ onLogout, userId, carrito, countProductos }) {
   const location = useLocation();
   useEffect(() => {
     const handleUser = async () => {
-      const response = await axiosInstance.get(`usuarios/${userId}`);
+      const response = await axiosInstance.get(`usuarios/${userId}/`);
       if (response.status === 200) {
         setUser(response.data);
       }
