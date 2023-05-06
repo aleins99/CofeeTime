@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:18-alpine
 WORKDIR /home/cofeetime/client
 COPY package.json package-lock.json ./
 RUN npm ci

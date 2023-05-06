@@ -11,7 +11,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     // login and get an user with JWT token
 
-    axios
+    await axios
       .post("http://localhost:8000/cofee/api/token/", {
         username,
         password,

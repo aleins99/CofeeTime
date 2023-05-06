@@ -24,11 +24,14 @@ services:
     ports:
       - 5173:5173
     volumes:
-      - .:/home/cofeetime
+      - ./client:/home/cofeetime/client
+      - /home/cofeetime/client/node_modules
     depends_on:
       - backend
     command: npm run dev
     tty: true
+    environment:
+      VITE_CONFIG: /home/cofeetime/clien/vite.config.js
 
   backend:
     build:

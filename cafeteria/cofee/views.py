@@ -10,6 +10,7 @@ from rest_framework import status
 from .permissions import IsRecepcionista, IsRecepcionistaOrCocinero, isAdmin, IsRecepcionistaOrAdmin
 from django.core import serializers
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.contrib.auth.hashers import make_password
 
 
 class ProductoView(viewsets.ModelViewSet):
@@ -59,3 +60,19 @@ class UserView(viewsets.ModelViewSet):
 
         else:
             return Response({"message": "Error al crear el usuario"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        data = request.data
+        try:
+            if data['password'] != None:
+                data['password'] = make_password(data['password'])
+        except Exception as e:
+            print(e)
+        try:
+            if data['group_name'] != None or data['group_name'] != "":
+                usuario = User.objects.get(pk=kwargs['pk'])
+                usuario.groups.clear()
+                usuario.groups.add(Group.objects.get(name=data['group_name']))
+        except Exception as e:
+            print(e)
+        return super().update(request, *args, **kwargs)
