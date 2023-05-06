@@ -20,7 +20,7 @@ class ProductoView(viewsets.ModelViewSet):
 
     def get_permissions(self):
         permission_classes = list()
-        if self.action == "retrieve" or self.action == "list":
+        if self.action == "list":
             permission_classes = [IsRecepcionistaOrAdmin]
         if permission_classes.__len__() == 0:
             permission_classes = [isAdmin]

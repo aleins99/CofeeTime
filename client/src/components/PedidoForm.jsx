@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
-export default function AddPedidos({ setCarrito }) {
+export default function PedidoForms({ setCarrito }) {
   const {
     register,
     handleSubmit,

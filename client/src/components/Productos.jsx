@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addPeriod } from "../utils/addPeriod.js";
 import PropTypes from "prop-types";
 import axiosInstance from "../utils/axiosInstance.js";
+import editBtn from "../assets/edit-btn.svg";
 const Productos = (props) => {
   const [productos, setProductos] = useState([]);
   const { rol, carrito, setCarrito } = props;
 
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     getProductos();
   }, []);
@@ -70,7 +71,19 @@ const Productos = (props) => {
               className="max-w-sm rounded overflow-hidden shadow-lg px-4 py-8 flex flex-col justify-between"
             >
               {producto.imagen && (
-                <img src={producto.imagen} className="w-[85px] h-25 my-5" />
+                <div className="w-full flex justify-between">
+                  <img src={producto.imagen} className="w-[85px] h-25 my-5" />
+                  {rol === "admin" && (
+                    <img
+                      src={editBtn}
+                      alt="Boton de editar producto"
+                      className="w-6 h-6 hover:cursor-pointer"
+                      onClick={() => {
+                        navigate(`/producto/${producto.id}`);
+                      }}
+                    />
+                  )}
+                </div>
               )}
               <p className="font-bold">{producto.descripcion.toUpperCase()}</p>
               <p className="">

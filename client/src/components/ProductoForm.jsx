@@ -1,31 +1,62 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosInstance";
-export default function AddProductos() {
+export default function ProductoForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
-
+  const params = useParams();
+  useEffect(() => {
+    async function cargarProducto() {
+      if (params.id) {
+        const { data } = await axiosInstance.get(`productos/${params.id}/`);
+        setValue("descripcion", data.descripcion);
+        setValue("precio", data.precio);
+        console.log(data.imagen);
+        setValue("imagen", data.imagen);
+      }
+    }
+    cargarProducto();
+  }, []);
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     setImage(file);
   };
   const onSubmit = handleSubmit(async (data) => {
-    let form_data = new FormData();
-    form_data.append("descripcion", data.descripcion);
-    form_data.append("precio", parseInt(data.precio));
-    form_data.append("imagen", image);
+    if (!params.id) {
+      let form_data = new FormData();
+      form_data.append("descripcion", data.descripcion);
+      form_data.append("precio", parseInt(data.precio));
+      form_data.append("imagen", image);
 
-    const response = await axiosInstance.post("productos/", form_data);
-    if (response.status === 201) {
-      navigate("/productos");
+      const response = await axiosInstance.post("productos/", form_data);
+      if (response.status === 201) {
+        navigate("/productos");
+      } else {
+        console.error("Invalid");
+      }
     } else {
-      console.error("Invalid");
+      let form_data = new FormData();
+
+      form_data.append("descripcion", data.descripcion);
+      form_data.append("precio", parseInt(data.precio));
+      form_data.append("imagen", image);
+      console.log(form_data);
+      const response = await axiosInstance.patch(
+        `productos/${params.id}/`,
+        form_data
+      );
+      if (response.status === 200) {
+        navigate("/productos");
+      } else {
+        console.error("Invalid");
+      }
     }
   });
   return (
@@ -82,15 +113,11 @@ export default function AddProductos() {
             id="product_image"
             type="file"
             onChange={handleImageUpload}
-            {...register("imagen", { required: true })}
           />
-          {errors.imagen && (
-            <span className="text-red-600">Este campo es requerido</span>
-          )}
         </div>
         <div className="flex items-center justify-between">
           <button className="bg-slate-800 hover:bg-slate-700 dark:bg-blue-500 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Agregar Producto
+            {params.id ? "Editar Producto" : "Agregar Producto"}
           </button>
         </div>
       </form>

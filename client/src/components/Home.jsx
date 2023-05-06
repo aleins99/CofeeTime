@@ -5,8 +5,8 @@ import Usuarios from "./Usuarios";
 import Pedidos from "./Pedidos";
 import PropTypes from "prop-types";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AddProductos from "./AddProductos";
-import AddPedido from "./AddPedido";
+import ProductoForm from "./ProductoForm";
+import PedidoForm from "./PedidoForm";
 import axiosInstance from "../utils/axiosInstance";
 const Home = ({ onLogout, userId }) => {
   const [user, setUser] = useState();
@@ -71,10 +71,12 @@ const Home = ({ onLogout, userId }) => {
               }
             ></Route>
             <Route path="/usuarios" element={<Usuarios />}></Route>
-            <Route path="/producto/agregar/" element={<AddProductos />}></Route>
+            <Route path="/producto/agregar/" element={<ProductoForm />}></Route>
+            <Route path="/producto/:id" element={<ProductoForm />}></Route>
+
             <Route
               path="/pedido/agregar/"
-              element={<AddPedido setCarrito={setCarrito} carrito={carrito} />}
+              element={<PedidoForm setCarrito={setCarrito} carrito={carrito} />}
             ></Route>
           </Routes>
         </div>

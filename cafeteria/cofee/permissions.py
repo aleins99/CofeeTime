@@ -6,6 +6,7 @@ class isAdmin(permissions.BasePermission):
         if request.user.groups.first() == None:
             return False
         if request.user.groups.first().name == "admin":
+            print("entra")
             return True
         return False
 
