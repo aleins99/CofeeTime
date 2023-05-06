@@ -22,33 +22,6 @@ export default function Navbar({ onLogout, userId, carrito, countProductos }) {
   const logoutHandler = () => {
     onLogout();
   };
-  useEffect(() => {
-    const handleDarkMode = () => {
-      const root = document.getElementById("root");
-      const ls = localStorage.setItem("theme", "dark");
-      if (
-        localStorage.theme === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
-        document.documentElement.classList.add("dark");
-        console.log("dark");
-      } else {
-        document.documentElement.classList.add("dark");
-        console.log("dark");
-      }
-
-      // Whenever the user explicitly chooses light mode
-      localStorage.theme = "light";
-
-      // Whenever the user explicitly chooses dark mode
-      localStorage.theme = "dark";
-
-      // Whenever the user explicitly chooses to respect the OS preference
-      localStorage.removeItem("theme");
-    };
-    handleDarkMode();
-  }, []);
   const role = user ? user.group_name : "";
 
   return (

@@ -71,24 +71,7 @@ export default function AddPedidos({ setCarrito }) {
             <span className="text-red-600">Este campo es requerido</span>
           )}
         </div>
-        <div className="mb-6 w-full">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="pedido_fecha"
-          >
-            Fecha
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="pedido_fecha"
-            type="date"
-            placeholder="Alejandro Marin"
-            {...register("fecha", { required: true })}
-          />
-          {errors.fecha && (
-            <span className="text-red-600">Este campo es requerido</span>
-          )}
-        </div>
+
         <div className="flex items-center justify-between">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Agregar Pedido

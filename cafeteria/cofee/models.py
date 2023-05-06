@@ -25,10 +25,11 @@ class Productos(models.Model):
 class Pedidos(models.Model):
 
     pedidos = models.TextField(verbose_name='Pedidos', null=True, blank=True)
-    fecha = models.DateTimeField(blank=True, null=True)
+    fecha = models.DateTimeField(blank=True, null=True, auto_now_add=True)
     cantidad = models.FloatField(
         verbose_name='Cantidad', null=True, blank=True)
     cliente = models.CharField(max_length=100, null=True)
+    descripcion_tiempo = models.TextField(null=True, blank=True)
     pedido = (
         ('1', 'Listo'),
         ('2', 'En proceso'),
