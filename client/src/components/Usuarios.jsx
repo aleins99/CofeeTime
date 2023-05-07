@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import userIcon from "../assets/user.svg";
 import axiosInstance from "../utils/axiosInstance";
+import editBtn from "../assets/edit-btn.svg";
+import { useNavigate } from "react-router-dom";
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let getUsuarios = async () => {
@@ -28,7 +31,20 @@ const Usuarios = () => {
                 className="max-w-sm rounded overflow-hidden shadow-lg px-4 py-8"
               >
                 <div className="grid grid-cols-3">
-                  <img className="w-8 color-white" src={userIcon} alt="" />
+                  <img
+                    className="w-8 color-white col-span-2 mb-5"
+                    src={userIcon}
+                    alt={usuario.first_name}
+                  />
+                  <img
+                    src={editBtn}
+                    alt="Boton de editar producto"
+                    className="w-6 h-6 hover:cursor-pointer mx-6"
+                    onClick={() => {
+                      navigate(`/usuario/${usuario.id}`);
+                    }}
+                  />
+
                   <span className="dark:text-white text-gray-800 col-span-2">
                     {usuario.first_name} {usuario.last_name}
                   </span>

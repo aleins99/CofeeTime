@@ -70,21 +70,22 @@ const Productos = (props) => {
               key={producto.id}
               className="max-w-sm rounded overflow-hidden shadow-lg px-4 py-8 flex flex-col justify-between"
             >
-              {producto.imagen && (
-                <div className="w-full flex justify-between">
+              <div className="w-full flex justify-between">
+                {producto.imagen && (
                   <img src={producto.imagen} className="w-[85px] h-25 my-5" />
-                  {rol === "admin" && (
-                    <img
-                      src={editBtn}
-                      alt="Boton de editar producto"
-                      className="w-6 h-6 hover:cursor-pointer"
-                      onClick={() => {
-                        navigate(`/producto/${producto.id}`);
-                      }}
-                    />
-                  )}
-                </div>
-              )}
+                )}
+                {rol === "admin" && (
+                  <img
+                    src={editBtn}
+                    alt="Boton de editar producto"
+                    className="w-6 h-6 hover:cursor-pointer"
+                    onClick={() => {
+                      navigate(`/producto/${producto.id}`);
+                    }}
+                  />
+                )}
+              </div>
+
               <p className="font-bold">{producto.descripcion.toUpperCase()}</p>
               <p className="">
                 <strong>Precio:</strong>{" "}
