@@ -17,7 +17,7 @@ const Login = ({ onLogin }) => {
         password,
       })
       .then(function (response) {
-        console.log(response);
+        console.log(response.data);
         window.localStorage.setItem("authToken", JSON.stringify(response.data));
         onLogin(jwtDecode(response.data.access).user_id);
       })
@@ -42,6 +42,7 @@ const Login = ({ onLogin }) => {
           id="username"
           type="text"
           onChange={(e) => {
+            console.log(e.target.value);
             setUsername(e.target.value);
           }}
         />

@@ -13,11 +13,10 @@ export default function PedidoForms({ setCarrito }) {
   const [total, setTotal] = useState(0);
   const [productos, setProductos] = useState("");
   useEffect(() => {
-    const getLocalStorage = async () => {
-      const total = await localStorage.getItem("total");
-      const pedidos = await JSON.parse(
-        window.localStorage.getItem("productos")
-      );
+    const getLocalStorage = () => {
+      const total = localStorage.getItem("total");
+      const pedidos = JSON.parse(window.localStorage.getItem("productos"));
+      console.log(pedidos);
       const filteredProducts = pedidos.filter(
         (item, index) => pedidos.indexOf(item) === index
       );
@@ -32,6 +31,7 @@ export default function PedidoForms({ setCarrito }) {
     data.pedidos = productos;
     data.cantidad = parseInt(total);
     data.pedido = "2";
+    console.log(data);
     const response = await axiosInstance.post("pedidos/", data);
     if (response.status === 201) {
       localStorage.removeItem("total");

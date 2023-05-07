@@ -87,7 +87,8 @@ const Productos = (props) => {
               )}
               <p className="font-bold">{producto.descripcion.toUpperCase()}</p>
               <p className="">
-                Precio: <span>{addPeriod(producto.precio)} G.s </span>{" "}
+                <strong>Precio:</strong>{" "}
+                <span>{addPeriod(producto.precio)} G.s </span>{" "}
               </p>
               <div className="flex justify-end">
                 {rol === "recepcionista" && (

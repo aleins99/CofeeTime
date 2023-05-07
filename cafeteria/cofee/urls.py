@@ -10,15 +10,11 @@ router = routers.DefaultRouter()
 router.register(r'pedidos', views.PedidoView, 'pedidos')
 router.register(r'productos', views.ProductoView, 'productos')
 router.register(r'usuarios', views.UserView, 'usuarios')
-getUsuario = views.UserView.as_view({
-    'get': 'retrieve',
-})
 
 urlpatterns = [
     path('api/', include(router.urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
-    path('api/usuarios/<int:pk>/', getUsuario, name='getUsuario')
 ]
 
 

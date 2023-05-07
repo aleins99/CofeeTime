@@ -27,7 +27,7 @@ export default function Navbar({ onLogout, userId, carrito, countProductos }) {
   return (
     <header className="header">
       {user && (
-        <nav className="navbar bg-orange-600 dark:bg-slate-700">
+        <nav className="navbar bg-amber-700 dark:bg-slate-700">
           <ul className="flex justify-between w-full">
             <h2 className="left text-white">
               Bienvenido {user.first_name + " " + user.last_name}!
