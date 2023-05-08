@@ -32,14 +32,14 @@ export default function ProductoForm() {
     }
   };
   return (
-    <div className="w-full grid place-items-center my-10 ">
+    <div className="w-full grid place-items-center  dark:bg-slate-800 dark:text-white h-full ">
       <form
         onSubmit={onSubmit}
-        className="bg-white shadow-md rounded px-10 pt-6 pb-8 mb-4 w-2/6"
+        className="bg-white shadow-md rounded px-10 pt-6 pb-8 mb-4 w-2/6  dark:bg-slate-800 dark:text-white"
       >
         <div className="mb-4 w-80px w-full">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 dark:text-white text-sm font-bold mb-2"
             htmlFor="usuario_rol"
           >
             Rol

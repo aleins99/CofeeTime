@@ -52,11 +52,15 @@ const Usuarios = () => {
 
                 <p className="dark:text-white text-blue-800 text-base ">
                   Nombre de usuario:{" "}
-                  <span className="text-gray-800">{usuario.username} </span>
+                  <span className="text-gray-800 dark:text-white">
+                    {usuario.username}{" "}
+                  </span>
                 </p>
                 <p className="dark:text-white text-blue-800 text-base">
                   Rol:{" "}
-                  <span className="text-gray-800">{usuario.group_name}</span>
+                  <span className="text-gray-800 dark:text-white">
+                    {usuario.group_name}
+                  </span>
                 </p>
               </li>
             )

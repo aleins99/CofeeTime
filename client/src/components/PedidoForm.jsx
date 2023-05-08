@@ -48,14 +48,14 @@ export default function PedidoForms({ setCarrito }) {
     }
   });
   return (
-    <div className="w-full grid place-items-center my-10 ">
+    <div className="w-full h-full grid place-items-center dark:text-white dark:bg-slate-800">
       <form
         onSubmit={onSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 dark:bg-slate-800"
       >
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
             htmlFor="pedido_cliente"
           >
             Cliente

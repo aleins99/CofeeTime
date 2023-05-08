@@ -31,7 +31,7 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="login">
+    <div className="login dark:bg-slate-800 dark:text-white">
       <form onSubmit={loginHandle}>
         <img src={coffeeIcon} alt="Coffee Icon" width={100} />
         <h2>Coffee Time</h2>

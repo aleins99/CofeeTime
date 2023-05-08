@@ -60,14 +60,14 @@ export default function ProductoForm() {
     }
   });
   return (
-    <div className="w-full grid place-items-center my-10 ">
+    <div className="w-full grid place-items-center h-full dark:bg-slate-800 dark:text-white">
       <form
         onSubmit={onSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 dark:bg-slate-800 dark:text-white"
       >
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="dark:text-white block text-gray-700 text-sm font-bold mb-2"
             htmlFor="product_description"
           >
             Descripción
@@ -85,7 +85,7 @@ export default function ProductoForm() {
         </div>
         <div className="mb-6">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="dark:text-white block text-gray-700 text-sm font-bold mb-2"
             htmlFor="product_price"
           >
             Precio
@@ -103,7 +103,7 @@ export default function ProductoForm() {
         </div>
         <div className="mb-6">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="dark:text-white block text-gray-700 text-sm font-bold mb-2"
             htmlFor="product_image"
           >
             Imagen

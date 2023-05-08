@@ -22,7 +22,7 @@ const Pedidos = ({ rol, userId }) => {
     setPedidos(pedidos.filter((pedido) => pedido.id !== id));
   };
   return (
-    <div className="px-5 py-5">
+    <div className="px-5 py-5 dark:bg-slate-800 dark:text-white h-full">
       {!pedidos && navigate("/")}
       <h1>Pedidos</h1>
       <ul className="grid lg:grid-cols-4 gap-4 grid-cols-2 md:grid-cols-3 place-content-center">
