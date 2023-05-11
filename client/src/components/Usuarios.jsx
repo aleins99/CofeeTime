@@ -17,6 +17,15 @@ const Usuarios = () => {
     };
     getUsuarios();
   }, []);
+  async function eliminarUsuario(id) {
+    const response = await axiosInstance.delete(`usuarios/${id}/`);
+    console.log(response);
+    if (response.status === 204) {
+      setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
+    } else {
+      console.error("Error al eliminar");
+    }
+  }
   return (
     <div className="px-5 py-5 dark:bg-slate-800 h-full">
       <h1 className="text-center sm:text-left text-4xl dark:text-white">
@@ -62,6 +71,14 @@ const Usuarios = () => {
                     {usuario.group_name}
                   </span>
                 </p>
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => eliminarUsuario(usuario.id)}
+                    className="bg-slate-800 hover:bg-slate-700 dark:bg-blue-500 dark:hover:bg-blue-700 text-white flex-end dark:bg-blue-600"
+                  >
+                    Eliminar Usuario
+                  </button>
+                </div>
               </li>
             )
           );
