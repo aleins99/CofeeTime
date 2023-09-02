@@ -20,6 +20,7 @@ const Login = ({ onLogin }) => {
         console.log(response.data);
         window.localStorage.setItem("authToken", JSON.stringify(response.data));
         onLogin(jwtDecode(response.data.access).user_id);
+        window.location.reload();
       })
       .catch(function (error) {
         if (error.response.status === 400) {
@@ -38,7 +39,6 @@ const Login = ({ onLogin }) => {
         <p>Please login to your account</p>
         <input
           aria-label="Username"
-          placeholder="Username"
           id="username"
           type="text"
           onChange={(e) => {

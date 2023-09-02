@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Carrito from "./Carrito";
 import axiosInstance from "../utils/axiosInstance";
-import { useLocation } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
 export default function Navbar({ onLogout, userId, carrito, countProductos }) {
   const [user, setUser] = useState();
   const location = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
     const handleUser = async () => {
       const response = await axiosInstance.get(`usuarios/${userId}/`);
@@ -20,6 +20,7 @@ export default function Navbar({ onLogout, userId, carrito, countProductos }) {
   }, [userId]);
 
   const logoutHandler = () => {
+    navigate("/");
     onLogout();
   };
   const role = user ? user.group_name : "";
@@ -89,7 +90,6 @@ export default function Navbar({ onLogout, userId, carrito, countProductos }) {
               )}
 
               <li>
-                {" "}
                 <button
                   className="text-white bg-stone-500 hover:bg-stone-600 dark:bg-blue-400"
                   onClick={logoutHandler}

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Login from "./components/Login";
 import Home from "./components/Home";
+
 import jwtDecode from "jwt-decode";
 function App() {
   const [userId, setUserId] = useState(null);
@@ -20,6 +21,7 @@ function App() {
   const onLogoutHandler = () => {
     setUserId(null);
     localStorage.clear();
+    window.location.reload();
   };
 
   return (
