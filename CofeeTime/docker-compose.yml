@@ -22,7 +22,7 @@ services:
     image: app_front
     restart: always
     ports:
-      - 5173:5173
+      - 5174:5173
     volumes:
       - ./client:/home/cofeetime/client
       - /home/cofeetime/client/node_modules

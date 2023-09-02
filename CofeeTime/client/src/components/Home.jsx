@@ -43,8 +43,6 @@ const Home = ({ onLogout, userId }) => {
     );
   } else if (role === "admin") {
     content = <Usuarios />;
-  } else {
-    content = "<h1>Home Page</h1>";
   }
   return (
     <BrowserRouter>
